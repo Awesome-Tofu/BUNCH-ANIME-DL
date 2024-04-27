@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
+import icon from '../media/icon.jpg'
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,7 @@ function Navbar() {
         <nav className="fixed top-0 w-full z-50 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="https://i.pinimg.com/564x/16/73/49/167349fb497f247d4530aae296e8fbbe.jpg" className="h-8 rounded-full w-100" alt="anime dl Logo" />
+                    <img src={icon} className="h-8 rounded-full w-100" alt="anime dl Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Anime-DL</span>
                 </a>
                 <button data-collapse-toggle="navbar-dropdown" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">

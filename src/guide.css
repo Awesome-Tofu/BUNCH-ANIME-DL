@@ -1,0 +1,19 @@
+.maindiv{
+    margin-top: 4rem;
+}
+
+ol{
+    width: 100%;
+    font-size: larger;
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    .maindiv {
+        padding-right: 0rem;
+    }
+    ol{
+        position: absolute;
+        left: 0%;
+    }
+}

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import '../guide.css'
 
 function Guide({ showLoading }) {
     document.title = "Anime DL - Guide";
@@ -10,8 +11,9 @@ function Guide({ showLoading }) {
         // eslint-disable-next-line
     }, []);
     return (
-        <div style={{ marginTop: "4rem" }} className='flex flex-col items-center mx-auto my-10 px-4 sm:px-6 lg:px-8 max-w-7xl w-screen h-screen'>
-            <ol style={{ width: "84%", fontSize: "larger", padding: "20px", }} className=" space-y-4 text-gray-500 list-decimal list-inside dark:text-gray-400">
+        <div className='maindiv flex flex-col items-center mx-auto my-10 px-4 sm:px-6 lg:px-8 max-w-7xl'>
+            {/* Hello */}
+            <ol className="text-gray-500 list-decimal list-inside dark:text-gray-400">
                 <li>
                     IMPORTANT thing to do before using the site
                     <ul className="ps-5 mt-2 space-y-1 list-disc list-inside">
@@ -29,7 +31,7 @@ function Guide({ showLoading }) {
                 <li>
                     How to use the site?
                     <ul className="ps-5 mt-2 space-y-1 list-disc list-inside">
-                        <li>Find the anime you want to download on gogoanime. You can use either the direct link to the anime or the anime ID. For example, if you're downloading One Piece, the link would be 'https://ww5.gogoanimes.fi/category/one-piece' and the anime ID would be 'one-piece'.</li>
+                        <li>Find the anime you want to download on gogoanime. You can use either the direct link to the anime or the anime ID. For example, if you're downloading One Piece, the link would be 'https://anitaku.so/category/one-piece' and the anime ID would be 'one-piece'.</li>
                         <li>Enter the anime ID or the direct link into the appropriate field.</li>
                         <li>Specify the range of episodes you want to download. Enter the number of the first episode you want to download in the 'From' field, and the number of the last episode you want to download in the 'To' field.</li>
                         <li>Select the quality of the episodes from the dropdown menu.</li>
@@ -48,7 +50,6 @@ function Guide({ showLoading }) {
                     </ul>
                 </li>
             </ol>
-
         </div>
     )
 }
