@@ -53,9 +53,10 @@ function Continue(props) {
         } catch (error) {
             alert('danger', 'Anime not found! Please ensure the provided link is correct', 6);
             setLoading(false);
+            setProgress(100);
             return;
         }
-        setProgress(100)
+        setProgress(100);
     };
 
 
