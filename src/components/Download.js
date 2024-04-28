@@ -1,7 +1,11 @@
 // DOWNLOAD.js
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Continue from './Continue';
+import Img1 from '../media/search-not-found-one.webp';
+import Img2 from '../media/search-not-found-two.webp';
+import Img3 from '../media/search-not-found-three.webp';
+import Img4 from '../media/search-not-found-four.webp';
 
 function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
   document.title = "Anime DL - Home";
@@ -11,18 +15,22 @@ function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
   const [to, setTo] = useState('');
   const [quality, setQuality] = useState('');
   const [dropdownquality, setDropdownquality] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+
+  const inputRef = useRef(null);
 
   const linkToId = (link) => {
-    if (link.startsWith('https://')) {      
+    if (link.startsWith('https://')) {
       if (link.endsWith('/')) {
         link = link.slice(0, -1);
       }
-  
+
       const url = new URL(link);
       const pathParts = url.pathname.split('/');
       const animeId = pathParts[pathParts.length - 1];
       return animeId;
-    }else{
+    } else {
       return link;
     }
   }
@@ -52,13 +60,60 @@ function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
     // eslint-disable-next-line
   }, [from, to]);
 
+  const images = [Img1, Img2, Img3, Img4];
+  const RandomImage = images[Math.floor(Math.random() * images.length)];
+
+  const placeholders = ['one-piece', 'naruto', 'naruto-shippuden', 'one-punch-man', 'https://anitaku.to/category/one-piece', 'https://www.animerealms.org/anime/death-note', 'https://ww5.gogoanimes.fi/category/blue-lock'];
+  const randomInputPlaceHolder = placeholders[Math.floor(Math.random() * placeholders.length)];
+
+  const handleSearch = async (e) => {
+    const searchTerm = e.target.value;
+    if (searchTerm) {
+      const response = await axios.get(`https://gogoapi.cyclic.app/search/${searchTerm}`);
+      setSearchResults(response.data);
+      if (response.data.length === 0) {
+        setSearchResults([{ name: 'No results found', anime_id: '', img_url: RandomImage }]);
+      }
+      setShowSearchResults(true);
+    } else {
+      setShowSearchResults(false);
+    }
+  };
+
+  const selectAnime = (animeId) => {
+    console.log(animeId);
+    if (inputRef.current) {
+      inputRef.current.value = animeId;
+    }
+    setId(animeId);
+    setShowSearchResults(false);
+  };
+
 
   const allInputsSelected = id && from && to && quality;
 
   return (
     <div style={{ marginTop: "7rem" }} className='flex flex-col items-center mx-auto my-10 px-4 sm:px-6 lg:px-8 max-w-7xl'>
-      <label htmlFor="text-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter the anime link or anime id</label>
-      <input type="text" id="text-input" onChange={e => setId(e.target.value)} aria-describedby="helper-text-explanation" className="w-full sm:w-2/5 mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Anime link or id"></input>
+
+      <div className="relative w-full flex flex-col items-center mx-auto my-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <label htmlFor="text-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter the anime link or search anime id</label>
+        <input ref={inputRef} autocomplete="off" type="text" id="text-input" onChange={handleSearch} aria-describedby="helper-text-explanation" className="w-full sm:w-2/5 mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={randomInputPlaceHolder}></input>
+
+        {showSearchResults && (
+          <div
+            className="absolute w-full sm:w-2/5 mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            style={{ maxHeight: '200px', overflowY: 'auto', marginTop: '5.06rem' }}
+          >
+            {searchResults.map((result) => (
+              <div style={{ padding: "0.4rem" }} key={result.anime_id} onClick={() => selectAnime(result.anime_id)} className="flex items-center border-b border-gray-400 cursor-pointer hover:bg-gray-600"> {/* Changed border color here */}
+                <img loading='lazy' src={result.img_url} alt={result.name} className="h-12 mr-4 rounded-lg" />
+                <span className="flex-grow">{result.name}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+      </div>
 
       <div className="flex justify-around items-center ">
         <div className="flex flex-col items-center w-1/2">

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import '../guide.css'
+import '../css/guide.css'
 
 function Guide({ showLoading }) {
     document.title = "Anime DL - Guide";
@@ -31,7 +31,7 @@ function Guide({ showLoading }) {
                 <li>
                     How to use the site?
                     <ul className="ps-5 mt-2 space-y-1 list-disc list-inside">
-                        <li>Find the anime you want to download on gogoanime. You can use either the direct link to the anime or the anime ID. For example, if you're downloading One Piece, the link would be 'https://anitaku.so/category/one-piece' and the anime ID would be 'one-piece'.</li>
+                        <li>Find the anime you want to download on gogoanime. You can use either the direct link to the anime or search for the anime id. For example, if you're downloading One Piece, the link would be 'https://anitaku.so/category/one-piece' and the anime ID would be 'one-piece'.</li>
                         <li>Enter the anime ID or the direct link into the appropriate field.</li>
                         <li>Specify the range of episodes you want to download. Enter the number of the first episode you want to download in the 'From' field, and the number of the last episode you want to download in the 'To' field.</li>
                         <li>Select the quality of the episodes from the dropdown menu.</li>

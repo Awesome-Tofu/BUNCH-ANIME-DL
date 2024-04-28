@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import '../loading.css';
+import '../css/loading.css';
 
 function Loading() {
   const dotsRef = useRef(null);
