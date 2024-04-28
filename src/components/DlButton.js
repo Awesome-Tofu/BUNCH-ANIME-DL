@@ -4,7 +4,7 @@ const DownloadButton = ({ fetchLinks, alert, setProgress }) => {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
-    alert("success", "Downloading all episodes...");
+    alert("success", "Downloading all episodes...", 7);
     setProgress(10);
     setLoading(true);
     try {
