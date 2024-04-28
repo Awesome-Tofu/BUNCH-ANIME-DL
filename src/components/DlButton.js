@@ -1,27 +1,44 @@
 import React, { useState } from 'react';
+import { saveAs } from 'file-saver';
+import axios from 'axios';
+import JSZip from 'jszip';
 
-const DownloadButton = ({ fetchLinks, alert, setProgress }) => {
+const DownloadButton = ({ fetchLinks, alert, setProgress, animeName, handlePersistentAlert, from, to }) => {
   const [loading, setLoading] = useState(false);
 
+  const numToArray = (start, end) => {
+    let array = [];
+    for (let i = start; i <= end; i++) {
+      array.push(i);
+    }
+    return array;
+  }
+
   const handleDownload = async () => {
-    alert("success", "Downloading all episodes...", 7);
-    setProgress(10);
+    alert("success", "Downloading all episodes...", 5);
+    setProgress(0);
     setLoading(true);
+    const zip = new JSZip();
     try {
+      const proxyUrl = 'https://workers.qewertyy.dev/media?url=';
       const mp4Links = await fetchLinks();
-      setProgress(30);
       for (const link of mp4Links) {
-        setProgress(30 + (mp4Links.indexOf(link) + 1) * 70 / mp4Links.length);
-        const popup = window.open(link);
-        if (!popup || popup.closed || typeof popup.closed === 'undefined') {
-          // If the pop-up did not open, show an alert
-          alert('danger', 'Please allow this site to open pop-ups and redirects.', 16);
-          setLoading(false);
-          return;
-        }
+        const episodeNumber = numToArray(from, to)[mp4Links.indexOf(link)];
+        setProgress(0 + (mp4Links.indexOf(link) + 1) * 70 / mp4Links.length);
+        handlePersistentAlert("info", `Downloading episode ${episodeNumber}/${to}... Do not close the tab or browser.`, true);
+        const response = await axios.get(proxyUrl + encodeURIComponent(link), {
+          responseType: 'blob'
+        });
+        const blob = new Blob([response.data], { type: 'video/mp4' });
+        zip.file(`episode-${mp4Links.indexOf(link) + 1}.mp4`, blob);
       }
+      zip.generateAsync({ type: "blob" }).then((content) => {
+        saveAs(content, `${animeName}.zip`);
+        handlePersistentAlert("", "", false);
+      });
     } catch (error) {
       alert('danger', "Failed to download all episodes. Please try again later.", 6);
+      handlePersistentAlert("", "", false);
     }
     setLoading(false);
     setProgress(100)

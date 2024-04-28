@@ -8,7 +8,7 @@ function Continue(props) {
     const [loading, setLoading] = useState(false);
     const [dlSingleLoading, setDlSingleLoading] = useState([]);
 
-    const { fetchLinks, from, to, id, alert, setProgress } = props;
+    const { fetchLinks, from, to, id, alert, setProgress, handlePersistentAlert } = props;
 
     const BASE_URL = 'https://gogoapi.cyclic.app';
     const downloadSingleEp = (index) => {
@@ -115,7 +115,7 @@ function Continue(props) {
                                     </div>
                                 </div>
                                 <div className="inline-flex my-2 items-center text-base font-semibold text-gray-900 dark:text-white">
-                                    <DlButton fetchLinks={fetchLinks} setProgress={setProgress} alert={alert} />
+                                    <DlButton from={from} to={to} handlePersistentAlert={handlePersistentAlert} fetchLinks={fetchLinks} setProgress={setProgress} alert={alert} animeName={animeinfo.name}/>
                                 </div>
                             </div>
                         </li>

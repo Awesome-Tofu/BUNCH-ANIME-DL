@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Continue from './Continue';
 
-function Download({ alert, showLoading, setProgress }) {
+function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
   document.title = "Anime DL - Home";
 
   const [id, setId] = useState('');
@@ -101,7 +101,7 @@ function Download({ alert, showLoading, setProgress }) {
 
 
 
-      {allInputsSelected && from < to && <Continue id={linkToId(id)} setProgress={setProgress} from={from} alert={alert} to={to} fetchLinks={fetchLinks} />}
+      {allInputsSelected && from < to && <Continue handlePersistentAlert={handlePersistentAlert} id={linkToId(id)} setProgress={setProgress} from={from} alert={alert} to={to} fetchLinks={fetchLinks} />}
     </div>
   );
 }
