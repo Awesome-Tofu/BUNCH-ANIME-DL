@@ -101,7 +101,7 @@ function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
 
 
 
-      {allInputsSelected && from < to && <Continue handlePersistentAlert={handlePersistentAlert} id={linkToId(id)} setProgress={setProgress} from={from} alert={alert} to={to} fetchLinks={fetchLinks} />}
+      {allInputsSelected && from < to && <Continue quality={quality} handlePersistentAlert={handlePersistentAlert} id={linkToId(id)} setProgress={setProgress} from={from} alert={alert} to={to} fetchLinks={fetchLinks} />}
     </div>
   );
 }

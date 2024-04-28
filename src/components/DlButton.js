@@ -3,7 +3,7 @@ import { saveAs } from 'file-saver';
 import axios from 'axios';
 import JSZip from 'jszip';
 
-const DownloadButton = ({ fetchLinks, alert, setProgress, animeName, handlePersistentAlert, from, to }) => {
+const DownloadButton = ({ fetchLinks, alert, setProgress, animeName, handlePersistentAlert, from, to, quality }) => {
   const [loading, setLoading] = useState(false);
 
   const numToArray = (start, end) => {
@@ -13,6 +13,30 @@ const DownloadButton = ({ fetchLinks, alert, setProgress, animeName, handlePersi
     }
     return array;
   }
+
+  const oldHandleDownload = async () => {
+    alert("success", "Downloading all episodes...", 7);
+    setProgress(10);
+    setLoading(true);
+    try {
+      const mp4Links = await fetchLinks();
+      setProgress(30);
+      for (const link of mp4Links) {
+        setProgress(30 + (mp4Links.indexOf(link) + 1) * 70 / mp4Links.length);
+        const popup = window.open(link);
+        if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+          // If the pop-up did not open, show an alert
+          alert('danger', 'Please allow this site to open pop-ups and redirects.', 16);
+          setLoading(false);
+          return;
+        }
+      }
+    } catch (error) {
+      alert('danger', "Failed to download all episodes. Please try again later.", 6);
+    }
+    setLoading(false);
+    setProgress(100)
+  };
 
   const handleDownload = async () => {
     alert("success", "Downloading all episodes...", 5);
@@ -25,7 +49,7 @@ const DownloadButton = ({ fetchLinks, alert, setProgress, animeName, handlePersi
       for (const link of mp4Links) {
         const episodeNumber = numToArray(from, to)[mp4Links.indexOf(link)];
         setProgress(0 + (mp4Links.indexOf(link) + 1) * 70 / mp4Links.length);
-        handlePersistentAlert("info", `Downloading episode ${episodeNumber}/${to}... Do not close the tab or browser.`, true);
+        handlePersistentAlert("info", `Downloading episode ${episodeNumber}/${to}... Do not close the tab or browser. DO some other work, it will be downloaded shortly`, true);
         const response = await axios.get(proxyUrl + encodeURIComponent(link), {
           responseType: 'blob'
         });
@@ -33,12 +57,12 @@ const DownloadButton = ({ fetchLinks, alert, setProgress, animeName, handlePersi
         zip.file(`episode-${mp4Links.indexOf(link) + 1}.mp4`, blob);
       }
       zip.generateAsync({ type: "blob" }).then((content) => {
-        saveAs(content, `${animeName}.zip`);
+        saveAs(content, `${animeName} (${quality}).zip`);
         handlePersistentAlert("", "", false);
       });
     } catch (error) {
-      alert('danger', "Failed to download all episodes. Please try again later.", 6);
       handlePersistentAlert("", "", false);
+      await oldHandleDownload();
     }
     setLoading(false);
     setProgress(100)
