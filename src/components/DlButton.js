@@ -26,7 +26,7 @@ const DownloadButton = ({ fetchLinks, alert, setProgress, animeName, handlePersi
         const popup = window.open(link);
         if (!popup || popup.closed || typeof popup.closed === 'undefined') {
           // If the pop-up did not open, show an alert
-          alert('danger', 'Please allow this site to open pop-ups and redirects.', 16);
+          alert('danger', 'Please allow this site to open pop-ups and redirects.', 50);
           setLoading(false);
           return;
         }
