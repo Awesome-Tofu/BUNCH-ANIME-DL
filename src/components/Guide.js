@@ -47,7 +47,7 @@ function Guide({ showLoading }) {
                         <li><Link to="https://gogoanime.run/" className="mt-6 cursor-pointer dark:text-white dark:hover:border-white text-base leading-none focus:outline-none hover:border-gray-800 focus:border-gray-800 border-b border-transparent text-center text-gray-800">https://gogoanime.run/</Link></li>
                         <li><Link to="https://gogoanime.org.za/" className="mt-6 cursor-pointer dark:text-white dark:hover:border-white text-base leading-none focus:outline-none hover:border-gray-800 focus:border-gray-800 border-b border-transparent text-center text-gray-800">https://gogoanime.org.za/</Link></li>
                         <li><Link to="https://anitaku.so/" className="mt-6 cursor-pointer dark:text-white dark:hover:border-white text-base leading-none focus:outline-none hover:border-gray-800 focus:border-gray-800 border-b border-transparent text-center text-gray-800">https://anitaku.so/</Link></li>
-                        <li><Link to="http://animerealms.org/" className="mt-6 cursor-pointer dark:text-white dark:hover:border-white text-base leading-none focus:outline-none hover:border-gray-800 focus:border-gray-800 border-b border-transparent text-center text-gray-800">http://animerealms.org/</Link></li>
+                        <li><Link to="https://animerealms.org/" className="mt-6 cursor-pointer dark:text-white dark:hover:border-white text-base leading-none focus:outline-none hover:border-gray-800 focus:border-gray-800 border-b border-transparent text-center text-gray-800">https://animerealms.org/</Link></li>
                     </ul>
                 </li>
             </ol>
