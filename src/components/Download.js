@@ -69,7 +69,7 @@ function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
   const handleSearch = async (e) => {
     const searchTerm = e.target.value;
     if (searchTerm) {
-      const response = await axios.get(`https://gogoapi.cyclic.app/search/${searchTerm}`);
+      const response = await axios.get(`https://apis-awesome-tofu.koyeb.app/api/gogo/search/${searchTerm}`);
       setSearchResults(response.data);
       if (response.data.length === 0) {
         setSearchResults([{ name: 'No results found', anime_id: '', img_url: RandomImage }]);

@@ -10,7 +10,7 @@ function Continue(props) {
 
     const { fetchLinks, from, to, id, alert, setProgress, handlePersistentAlert, quality } = props;
 
-    const BASE_URL = 'https://gogoapi.cyclic.app';
+    const BASE_URL = 'https://apis-awesome-tofu.koyeb.app/api/gogo';
     const downloadSingleEp = (index) => {
         setProgress(10)
         // Create a new array based on dlSingleLoading
