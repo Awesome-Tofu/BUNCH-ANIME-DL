@@ -39,7 +39,7 @@ function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
     const mp4Links = [];
     setProgress(0)
     for (let episode = from; episode <= to; episode++) {
-      const response = await axios.get(`https://gogobyshuya-e398e7347b33.herokuapp.com/anime/${linkToId(id)}-episode-${episode}`);
+      const response = await axios.get(`https://nandha-api.onrender.com/gogosource/${linkToId(id)}-episode-${episode}`);
       mp4Links.push(response.data[quality]);
       setProgress(10 + (episode - from) * 90 / (to - from));
     }
