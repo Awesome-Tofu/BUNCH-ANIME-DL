@@ -8,9 +8,23 @@ function Continue(props) {
     const [loading, setLoading] = useState(false);
     const [dlSingleLoading, setDlSingleLoading] = useState([]);
 
-    const { fetchLinks, from, to, id, alert, setProgress, handlePersistentAlert, quality } = props;
+    const { fetchSingleEp, fetchLinks, from, to, id, alert, setProgress, handlePersistentAlert, quality } = props;
 
     const BASE_URL = 'https://apis-awesome-tofu.koyeb.app/api/gogo';
+
+    // const getRedirectUrl = async (url) => {
+    //     try {
+    //         // Make a GET request to the provided URL
+    //         const response = await axios.get(`https://apis-awesome-tofu.koyeb.app/api/gru?url=${url}`);
+
+    //         const new_url = response.data;
+    //         console.log(new_url);
+    //         return new_url;
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
     const downloadSingleEp = (index) => {
         setProgress(10)
         // Create a new array based on dlSingleLoading
@@ -26,9 +40,9 @@ function Continue(props) {
         setDlSingleLoading(newDlSingleLoading);
         setProgress(50)
 
-        fetchLinks().then((res) => {
-            console.log(res[index]);
-            window.open(res[index]);
+        fetchSingleEp(index).then((res) => {
+            console.log(res);
+            window.open(res);
             setProgress(100)
 
             // Set the loading state of the clicked button to false
@@ -58,8 +72,6 @@ function Continue(props) {
         }
         setProgress(100);
     };
-
-
 
 
     return (

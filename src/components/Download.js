@@ -47,6 +47,18 @@ function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
     return mp4Links;
   };
 
+  const fetchSingleEp = async (index) => {
+    const fromTotoarray = Array.from({ length: to - from + 1 }, (_, i) => i + from);
+    const ep = fromTotoarray[index];
+    setProgress(0)
+    const response = await axios.get(`https://nandha-api.onrender.com/gogosource/${linkToId(id)}-episode-${ep}`);
+    const mp4Link = response.data[quality];
+    setProgress(10 + (ep - from) * 90 / (to - from));
+
+    setProgress(100);
+    return mp4Link;
+  };
+
   const setQualityfunc = (quality) => {
     setQuality(quality);
     setDropdownquality(false);
@@ -97,7 +109,7 @@ function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
 
       <div className="relative w-full flex flex-col items-center mx-auto my-10 px-4 sm:px-6 lg:px-8 max-w-7xl">
         <label htmlFor="text-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter the anime link or search anime id</label>
-        <input ref={inputRef} autocomplete="off" type="text" id="text-input" onChange={handleSearch} aria-describedby="helper-text-explanation" className="w-full sm:w-2/5 mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={randomInputPlaceHolder}></input>
+        <input ref={inputRef} autoComplete="off" type="text" id="text-input" onChange={handleSearch} aria-describedby="helper-text-explanation" className="w-full sm:w-2/5 mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder={randomInputPlaceHolder}></input>
 
         {showSearchResults && (
           <div
@@ -156,7 +168,7 @@ function Download({ alert, showLoading, setProgress, handlePersistentAlert }) {
 
 
 
-      {allInputsSelected && from < to && <Continue quality={quality} handlePersistentAlert={handlePersistentAlert} id={linkToId(id)} setProgress={setProgress} from={from} alert={alert} to={to} fetchLinks={fetchLinks} />}
+      {allInputsSelected && from < to && <Continue quality={quality} handlePersistentAlert={handlePersistentAlert} id={linkToId(id)} setProgress={setProgress} from={from} alert={alert} to={to} fetchSingleEp={fetchSingleEp} fetchLinks={fetchLinks} />}
     </div>
   );
 }
